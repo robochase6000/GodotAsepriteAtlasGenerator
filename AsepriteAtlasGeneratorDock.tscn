@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bam6fy2cp6ihb"]
 
-[ext_resource type="Script" path="res://addons/AsepriteAtlasGenerator/AsepriteAtlasGeneratorGUI.cs" id="1_ovesc"]
+[ext_resource type="Script" path="res://addons/GodotAsepriteAtlasGenerator/AsepriteAtlasGeneratorGUI.cs" id="1_ovesc"]
 
 [node name="AsepriteAtlasGenerator" type="Control" node_paths=PackedStringArray("SelectAtlasButton", "FileDialog")]
 layout_mode = 3
