@@ -1,5 +1,4 @@
 #if TOOLS
-using System.Diagnostics;
 using System.IO;
 using Godot;
 using Godot.Collections;
@@ -12,6 +11,12 @@ public partial class AsepriteAtlasGeneratorGUI : Control
 {
     [Export] public Button SelectAtlasButton;
     [Export] public FileDialog FileDialog;
+
+    [ExportGroup("runtime settings")]
+    [Export] public Vector2I RuntimeWindowSize = new Vector2I(640, 480);
+    [Export] public Window.ContentScaleModeEnum ContentScaleModeEnum = Window.ContentScaleModeEnum.CanvasItems;
+    [Export] public float ContentScaleFactor = 0.3f;
+    [Export] public Window.ContentScaleAspectEnum ContentScaleAspect = Window.ContentScaleAspectEnum.Ignore;
     
     public override void _Ready()
     {
@@ -19,6 +24,12 @@ public partial class AsepriteAtlasGeneratorGUI : Control
         SelectAtlasButton.Pressed += OnSelectAtlasButtonPressed;
         FileDialog.FileSelected += OnFileSelected;
         FileDialog.FilesSelected += OnMultipleFilesSelected;
+
+        var window = GetWindow();
+        window.Size = RuntimeWindowSize;
+        window.ContentScaleMode = ContentScaleModeEnum;
+        window.ContentScaleFactor = ContentScaleFactor;
+        window.ContentScaleAspect = ContentScaleAspect;
     }
 
     public override void _ExitTree()
@@ -47,14 +58,13 @@ public partial class AsepriteAtlasGeneratorGUI : Control
         }
     }
     
-private void HandleFileSelected(string path)
-{
-    GD.Print($"HandleFileSelected! {path}");
-    AsepriteAtlas asepriteAtlas = ResourceLoader.Load<AsepriteAtlas>(path, cacheMode:ResourceLoader.CacheMode.Ignore);
-    if (asepriteAtlas == null)
+    private void HandleFileSelected(string path)
     {
-        GD.PrintErr($"failed to open AsepriteAtlas .tres file at path {path}");
-    }
+        AsepriteAtlas asepriteAtlas = ResourceLoader.Load<AsepriteAtlas>(path, cacheMode:ResourceLoader.CacheMode.Ignore);
+        if (asepriteAtlas == null)
+        {
+            GD.PrintErr($"failed to open AsepriteAtlas .tres file at path {path}");
+        }
         
         var asepriteData = LoadJson(asepriteAtlas.JsonPath);
         Texture2D atlasImage = ResourceLoader.Load<Texture2D>(asepriteAtlas.TexturePath);

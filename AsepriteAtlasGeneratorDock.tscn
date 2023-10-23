@@ -9,9 +9,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_ovesc")
 SelectAtlasButton = NodePath("Select Atlas Button")
 FileDialog = NodePath("FileDialog")
+RuntimeWindowSize = Vector2i(1280, 960)
 
 [node name="Select Atlas Button" type="Button" parent="."]
 layout_mode = 0
@@ -20,7 +23,10 @@ offset_bottom = 31.0
 text = "Select Atlas File"
 
 [node name="FileDialog" type="FileDialog" parent="."]
+mode = 3
 title = "Open a File"
-size = Vector2i(400, 600)
+size = Vector2i(400, 300)
+content_scale_mode = 1
+content_scale_aspect = 1
 ok_button_text = "Open"
 file_mode = 0
